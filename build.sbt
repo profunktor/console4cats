@@ -120,3 +120,6 @@ lazy val microsite = project.in(file("site"))
     )
   )
   .dependsOn(console4cats)
+
+// CI build
+addCommandAlias("buildConsole4Cats", ";clean;+test;tut")
