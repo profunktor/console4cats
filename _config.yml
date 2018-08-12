@@ -1,0 +1,11 @@
+name: Console4Cats
+baseurl: /console4cats
+description: Console I/O for Cats Effect
+highlighter: rouge
+docs: true
+collections:
+  tut:
+    output: true
+version: '0.2'
+org: Typelevel
+markdown: kramdown
