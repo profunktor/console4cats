@@ -26,9 +26,11 @@ val program: IO[Unit] =
 
 #### Tagless final encoding:
 
-```scala
+```tut:book:reset:silent
 import cats.Monad
 import cats.effect.Console
+import cats.syntax.flatMap._
+import cats.syntax.functor._
 
 def myProgram[F[_]: Monad](implicit C: Console[F]): F[Unit] =
   for {
