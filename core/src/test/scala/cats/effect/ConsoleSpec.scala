@@ -48,7 +48,7 @@ class ConsoleSpec extends FunSuite {
         _ <- C.putStr(123)
         _ <- C.putStr("b")
         n <- C.readLn
-        _ <- C.putError(s"$n")
+        _ <- C.putError(n)
         _ <- C.putError(1.5)
       } yield n
 

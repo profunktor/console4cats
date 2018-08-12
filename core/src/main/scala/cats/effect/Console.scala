@@ -64,6 +64,8 @@ trait Console[F[_]] {
 }
 object Console {
 
+  def apply[F[_]](implicit ev: Console[F]): Console[F] = ev
+
   /**
     * Default instance for `Console[IO]`
     */
