@@ -18,6 +18,29 @@ promptTheme := PromptTheme(List(
   text(_ => "console4cats", fg(64)).padRight(" λ ")
  ))
 
+lazy val commonScalacOptions = Seq(
+  "-deprecation",
+  "-encoding", "UTF-8",
+  "-feature",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-language:implicitConversions",
+  "-language:experimental.macros",
+  "-unchecked",
+  "-Ypartial-unification",
+  "-Xfatal-warnings",
+  "-Xlint",
+  "-Yno-adapted-args",
+  "-Ywarn-dead-code",
+  "-Ywarn-value-discard",
+  "-Xfuture",
+  "-Xlog-reflective-calls",
+  "-Ywarn-inaccessible",
+  "-Ypatmat-exhaust-depth", "20",
+  "-Ydelambdafy:method",
+  "-Xmax-classfile-name", "100"
+)
+
 val commonSettings = Seq(
   organizationName := "Typelevel",
   startYear := Some(2018),
@@ -28,16 +51,7 @@ val commonSettings = Seq(
     Libraries.scalaTest
   ),
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
-  scalacOptions ++= Seq(
-    "-Xmax-classfile-name", "80",
-    "-deprecation",
-    "-encoding",
-    "UTF-8",
-    "-feature",
-    "-Ypartial-unification",
-    "-language:existentials",
-    "-language:higherKinds"
-  ),
+  scalacOptions ++= commonScalacOptions,
   scalafmtOnCompile := true,
   publishTo := {
     val sonatype = "https://oss.sonatype.org/"
@@ -72,6 +86,7 @@ lazy val root = project.in(file("."))
 
 lazy val console4cats = project.in(file("core"))
   .settings(commonSettings: _*)
+  .enablePlugins(AutomateHeaderPlugin)
 
 lazy val microsite = project.in(file("site"))
   .enablePlugins(MicrositesPlugin)
