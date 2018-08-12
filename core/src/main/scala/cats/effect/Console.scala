@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package cats.effect.console
+package cats.effect
 
 import cats.Show
-import cats.effect.{IO, Sync}
 import cats.instances.string._
 import cats.syntax.show._
 
@@ -86,21 +85,22 @@ object Console {
   *       n <- readLn
   *       _ <- if (n.nonEmpty) putStrLn(s"Hello $$n!")
   *            else putError("Name is empty!")
-  *     }
+  *     } yield ()
   * }}}
   *
   * Or in tagless final encoding:
   *
   * {{{
+  *   import cats.Monad
   *   import cats.effect._
   *
-  *   def myProgram[F[_]](implicit C: Console[F]): F[Unit] =
+  *   def myProgram[F[_]: Monad](implicit C: Console[F]): F[Unit] =
   *     for {
   *       _ <- C.putStrLn("Please enter your name: ")
   *       n <- C.readLn
   *       _ <- if (n.nonEmpty) C.putStrLn(s"Hello $$n!")
   *            else C.putError("Name is empty!")
-  *     }
+  *     } yield ()
   * }}}
   *
   */
