@@ -20,6 +20,8 @@
 
 <div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">cats.Monad</span>
 <span class="k">import</span> <span class="nn">cats.effect.Console</span>
+<span class="k">import</span> <span class="nn">cats.syntax.flatMap._</span>
+<span class="k">import</span> <span class="nn">cats.syntax.functor._</span>
 
 <span class="k">def</span> <span class="n">myProgram</span><span class="o">[</span><span class="kt">F</span><span class="o">[</span><span class="k">_</span><span class="o">]</span><span class="kt">:</span> <span class="kt">Monad</span><span class="o">](</span><span class="k">implicit</span> <span class="n">C</span><span class="k">:</span> <span class="kt">Console</span><span class="o">[</span><span class="kt">F</span><span class="o">])</span><span class="k">:</span> <span class="kt">F</span><span class="o">[</span><span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span>
   <span class="k">for</span> <span class="o">{</span>
