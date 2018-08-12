@@ -11,7 +11,7 @@
   <span class="k">for</span> <span class="o">{</span>
     <span class="k">_</span> <span class="k">&lt;-</span> <span class="n">putStrLn</span><span class="o">(</span><span class="s">"Please enter your name: "</span><span class="o">)</span>
     <span class="n">n</span> <span class="k">&lt;-</span> <span class="n">readLn</span>
-    <span class="k">_</span> <span class="k">&lt;-</span> <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">)</span> <span class="n">putStrLn</span><span class="o">(</span><span class="n">s</span><span class="s">"Hello $$n!"</span><span class="o">)</span>
+    <span class="k">_</span> <span class="k">&lt;-</span> <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">)</span> <span class="n">putStrLn</span><span class="o">(</span><span class="n">s</span><span class="s">"Hello $n!"</span><span class="o">)</span>
          <span class="k">else</span> <span class="n">putError</span><span class="o">(</span><span class="s">"Name is empty!"</span><span class="o">)</span>
   <span class="o">}</span> <span class="k">yield</span> <span class="o">()</span>
 </code></pre></div></div>
@@ -25,7 +25,7 @@
   <span class="k">for</span> <span class="o">{</span>
     <span class="k">_</span> <span class="k">&lt;-</span> <span class="n">C</span><span class="o">.</span><span class="n">putStrLn</span><span class="o">(</span><span class="s">"Please enter your name: "</span><span class="o">)</span>
     <span class="n">n</span> <span class="k">&lt;-</span> <span class="n">C</span><span class="o">.</span><span class="n">readLn</span>
-    <span class="k">_</span> <span class="k">&lt;-</span> <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">)</span> <span class="n">C</span><span class="o">.</span><span class="n">putStrLn</span><span class="o">(</span><span class="n">s</span><span class="s">"Hello $$n!"</span><span class="o">)</span>
+    <span class="k">_</span> <span class="k">&lt;-</span> <span class="k">if</span> <span class="o">(</span><span class="n">n</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">)</span> <span class="n">C</span><span class="o">.</span><span class="n">putStrLn</span><span class="o">(</span><span class="n">s</span><span class="s">"Hello $n!"</span><span class="o">)</span>
          <span class="k">else</span> <span class="n">C</span><span class="o">.</span><span class="n">putError</span><span class="o">(</span><span class="s">"Name is empty!"</span><span class="o">)</span>
   <span class="o">}</span> <span class="k">yield</span> <span class="o">()</span>
 </code></pre></div></div>
