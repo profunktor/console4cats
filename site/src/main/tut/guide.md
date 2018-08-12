@@ -19,7 +19,7 @@ val program: IO[Unit] =
   for {
     _ <- putStrLn("Please enter your name: ")
     n <- readLn
-    _ <- if (n.nonEmpty) putStrLn(s"Hello $$n!")
+    _ <- if (n.nonEmpty) putStrLn(s"Hello $n!")
          else putError("Name is empty!")
   } yield ()
 ```
@@ -34,7 +34,7 @@ def myProgram[F[_]: Monad](implicit C: Console[F]): F[Unit] =
   for {
     _ <- C.putStrLn("Please enter your name: ")
     n <- C.readLn
-    _ <- if (n.nonEmpty) C.putStrLn(s"Hello $$n!")
+    _ <- if (n.nonEmpty) C.putStrLn(s"Hello $n!")
          else C.putError("Name is empty!")
   } yield ()
 ```
