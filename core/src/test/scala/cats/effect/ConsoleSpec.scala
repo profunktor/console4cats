@@ -16,7 +16,6 @@
 
 package cats.effect
 
-import cats.effect.IO
 import cats.effect.concurrent.Ref
 import cats.instances.boolean._
 import cats.instances.double._

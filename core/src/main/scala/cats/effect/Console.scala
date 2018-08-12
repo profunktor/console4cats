@@ -33,7 +33,7 @@ trait Console[F[_]] {
   /**
     * Prints a message to the standard console followed by a new line.
     */
-  final def putStrLn(str: String): F[Unit] = putStrLn[String](str)
+  def putStrLn(str: String): F[Unit] = putStrLn[String](str)
 
   /**
     * Prints a message of type A to the standard console if an instance `Show[A]` is found.
@@ -43,7 +43,7 @@ trait Console[F[_]] {
   /**
     * Prints a message to the standard console.
     */
-  final def putStr(str: String): F[Unit] = putStr[String](str)
+  def putStr(str: String): F[Unit] = putStr[String](str)
 
   /**
     * Prints a message of type A to the standard error output stream if an instance `Show[A]` is found.
@@ -53,7 +53,7 @@ trait Console[F[_]] {
   /**
     * Prints a message to the standard error output stream.
     */
-  final def putError(str: String): F[Unit] = putError[String](str)
+  def putError(str: String): F[Unit] = putError[String](str)
 
   /**
     * Reads line from the standard console.
@@ -113,4 +113,8 @@ class SyncConsole[F[_]](implicit F: Sync[F]) extends Console[F] {
     F.delay(System.err.println(a.show))
   def readLn: F[String] =
     F.delay(scala.io.StdIn.readLine)
+  // Needed to avoid "ambiguous reference to overloaded definition" error
+  override final def putStrLn(str: String): F[Unit] = super.putStrLn(str)
+  override final def putStr(str: String): F[Unit] = super.putStr(str)
+  override final def putError(str: String): F[Unit] = super.putError(str)
 }
