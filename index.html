@@ -3,7 +3,14 @@
 <p><a href="https://travis-ci.org/gvolpe/console4cats"><img src="https://travis-ci.org/gvolpe/console4cats.svg?branch=master" alt="Build Status" /></a>
 <a href="http://search.maven.org/#search%7Cga%7C1%7Cconsole4cats"><img src="https://img.shields.io/maven-central/v/com.github.gvolpe/console4cats_2.12.svg" alt="Maven Central" /></a></p>
 
-<p>Console I/O for <code class="highlighter-rouge">Cats Effect</code>.</p>
+<p>Effect-type agnostic Console I/O for <code class="highlighter-rouge">Cats Effect</code></p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">cats.effect.IO</span>
+<span class="k">import</span> <span class="nn">cats.effect.Console.io._</span>
+
+<span class="k">val</span> <span class="n">program</span><span class="k">:</span> <span class="kt">IO</span><span class="o">[</span><span class="kt">Unit</span><span class="o">]</span> <span class="k">=</span>
+  <span class="n">readLn</span><span class="o">.</span><span class="n">flatMap</span><span class="o">(</span><span class="n">name</span> <span class="k">=&gt;</span> <span class="n">putStrLn</span><span class="o">(</span><span class="n">s</span><span class="s">"Hello $name!"</span><span class="o">))</span>
+</code></pre></div></div>
 
 <h3 id="getting-started">Getting started</h3>
 
@@ -14,7 +21,7 @@
 
 <h3 id="usage">Usage</h3>
 
-<p>See the <a href="https://gvolpe.github.io/console4cats/">microsite</a>.</p>
+<p>See the <a href="https://gvolpe.github.io/console4cats/">usage guide</a>.</p>
 
 </div></div></section><section class="technologies"><div class="container"><div class="row"></div></div></section></main><footer id="site-footer"><div class="container"><div class="row"><div class="col-xs-6"><p>Console4Cats is designed and developed by <a href="https://github.com/gvolpe/console4cats" target="_blank">Gabriel Volpe</a></p></div><div class="col-xs-6"><p class="text-right"><a href="https://github.com/gvolpe/console4cats"><span class="fa fa-github"></span>View on GitHub</a></p></div></div><div class="row"><div class="col-xs-6"><p>Website built with <a href="https://47deg.github.io/sbt-microsites/" target="_blank">Sbt-microsites</a> - © 2016 <a href="https://www.47deg.com/" target="_blank">47 Degrees</a></p></div></div></div></footer><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/console4cats/highlight/highlight.pack.js"></script><script>hljs.configure({
 languages:['scala','java','bash']
