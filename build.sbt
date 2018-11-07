@@ -7,8 +7,6 @@ name := """console4cats"""
 
 organization in ThisBuild := "com.github.gvolpe"
 
-version in ThisBuild := "0.3"
-
 crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.6")
 
 sonatypeProfileName := "com.github.gvolpe"
