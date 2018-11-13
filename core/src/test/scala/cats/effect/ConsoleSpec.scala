@@ -22,7 +22,7 @@ import cats.instances.boolean._
 import cats.instances.double._
 import cats.instances.int._
 import cats.syntax.all._
-import cats.{Applicative, Monad, Show}
+import cats.{Applicative, FlatMap, Show}
 import org.scalatest.FunSuite
 
 class ConsoleSpec extends FunSuite {
@@ -41,7 +41,7 @@ class ConsoleSpec extends FunSuite {
     override def readLn: F[String] = Applicative[F].pure("test")
   }
 
-  private def program[F[_]: Monad](implicit C: Console[F]): F[String] =
+  private def program[F[_]: FlatMap](implicit C: Console[F]): F[String] =
     for {
       _ <- C.putStrLn("a")
       _ <- C.putStrLn(true)
@@ -59,7 +59,7 @@ class ConsoleSpec extends FunSuite {
         out2 <- Ref.of[IO, List[String]](List.empty[String])
         out3 <- Ref.of[IO, List[String]](List.empty[String])
         cio = TestConsole(out1, out2, out3)
-        rs <- program(Monad[IO], cio)
+        rs <- program(FlatMap[IO], cio)
         rs1 <- out1.get
         rs2 <- out2.get
         rs3 <- out3.get
