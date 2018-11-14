@@ -19,18 +19,36 @@ package cats.effect
 import cats.data.Chain
 import cats.{Applicative, Show}
 import cats.effect.concurrent.Ref
+import cats.syntax.functor._
 import cats.syntax.show._
-import cats.syntax.applicative._
 
 class TestConsole[F[_]: Applicative](out1: Ref[F, Chain[String]],
                                      out2: Ref[F, Chain[String]],
-                                     out3: Ref[F, Chain[String]])
+                                     out3: Ref[F, Chain[String]],
+                                     val readLn: F[String])
     extends Console[F] {
+
   override def putStrLn[A: Show](a: A): F[Unit] =
     out1.update(acc => acc.append(a.show))
+
   override def putStr[A: Show](a: A): F[Unit] =
     out2.update(acc => acc.append(a.show))
+
   override def putError[A: Show](a: A): F[Unit] =
     out3.update(acc => acc.append(a.show))
-  override val readLn: F[String] = "test".pure[F]
+}
+
+object TestConsole {
+  object inputs {
+    def sequenceAndDefault[F[_]: Sync](inputs: Chain[String],
+                                       default: String): F[F[String]] =
+      Ref[F].of(inputs).map {
+        _.modify {
+          _.uncons match {
+            case Some((head, tail)) => (tail, head)
+            case None               => (Chain.nil, default)
+          }
+        }
+      }
+  }
 }
