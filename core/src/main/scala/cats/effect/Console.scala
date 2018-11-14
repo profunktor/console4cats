@@ -16,7 +16,7 @@
 
 package cats.effect
 
-import cats.Show
+import cats.{Show, ~>}
 import cats.instances.string._
 import cats.syntax.show._
 
@@ -61,7 +61,13 @@ trait Console[F[_]] {
     * @return a value representing the user's input or raise an error in the F context.
     */
   def readLn: F[String]
+
+  /**
+    * Transforms this console using a FunctionK.
+    * */
+  def mapK[G[_]](f: F ~> G): Console[G] = new TransformedConsole(this, f)
 }
+
 object Console {
 
   def apply[F[_]](implicit ev: Console[F]): Console[F] = ev
