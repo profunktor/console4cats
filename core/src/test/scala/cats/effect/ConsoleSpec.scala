@@ -38,7 +38,7 @@ class ConsoleSpec extends FunSuite {
       out2.update(acc => acc ::: a.show :: Nil)
     override def putError[A: Show](a: A): F[Unit] =
       out3.update(acc => acc ::: a.show :: Nil)
-    override def readLn: F[String] = Applicative[F].pure("test")
+    override def readLn: F[String] = "test".pure[F]
   }
 
   private def program[F[_]: FlatMap](implicit C: Console[F]): F[String] =
