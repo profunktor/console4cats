@@ -23,11 +23,12 @@ import cats.syntax.functor._
 import cats.syntax.show._
 import cats.{ Applicative, Show }
 
-private class TestConsole[F[_]: Applicative](outLines: Ref[F, Chain[String]],
-                                             outWords: Ref[F, Chain[String]],
-                                             outErrors: Ref[F, Chain[String]],
-                                             val readLn: F[String])
-    extends Console[F] {
+private class TestConsole[F[_]: Applicative](
+  outLines: Ref[F, Chain[String]],
+  outWords: Ref[F, Chain[String]],
+  outErrors: Ref[F, Chain[String]],
+  val readLn: F[String]
+) extends Console[F] {
 
   override def putStrLn[A: Show](a: A): F[Unit] =
     outLines.update(_.append(a.show))
