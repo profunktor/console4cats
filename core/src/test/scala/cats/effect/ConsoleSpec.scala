@@ -48,7 +48,7 @@ class ConsoleSpec extends FunSuite {
         out2 <- Ref[IO].of(Chain.empty[String])
         out3 <- Ref[IO].of(Chain.empty[String])
         in1 <- TestConsole.inputs
-          .sequenceAndDefault[IO](Chain("foo", "bar", "baz"), "")
+                .sequenceAndDefault[IO](Chain("foo", "bar", "baz"), "")
         rs <- {
           implicit val console: Console[IO] =
             new TestConsole(out1, out2, out3, in1)
@@ -76,7 +76,7 @@ class ConsoleSpec extends FunSuite {
         out2 <- Ref[IO].of(Chain.empty[String])
         out3 <- Ref[IO].of(Chain.empty[String])
         in1 <- TestConsole.inputs
-          .sequenceAndDefault[IO](Chain("foo"), "undefined")
+                .sequenceAndDefault[IO](Chain("foo"), "undefined")
         rs <- {
           implicit val console: Console[E] =
             new TestConsole[IO](out1, out2, out3, in1)

@@ -17,7 +17,7 @@
 package cats.effect
 
 import cats.data.Chain
-import cats.{Applicative, Show}
+import cats.{ Applicative, Show }
 import cats.effect.concurrent.Ref
 import cats.syntax.functor._
 import cats.syntax.show._
@@ -40,8 +40,7 @@ class TestConsole[F[_]: Applicative](out1: Ref[F, Chain[String]],
 
 object TestConsole {
   object inputs {
-    def sequenceAndDefault[F[_]: Sync](inputs: Chain[String],
-                                       default: String): F[F[String]] =
+    def sequenceAndDefault[F[_]: Sync](inputs: Chain[String], default: String): F[F[String]] =
       Ref[F].of(inputs).map {
         _.modify {
           _.uncons match {
