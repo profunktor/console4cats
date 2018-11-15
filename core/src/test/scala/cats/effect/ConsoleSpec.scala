@@ -24,6 +24,7 @@ import cats.instances.int._
 import cats.instances.string._
 import cats.syntax.all._
 import cats.FlatMap
+import cats.effect.test.TestConsole
 import org.scalatest.FunSuite
 
 class ConsoleSpec extends FunSuite {
@@ -51,7 +52,7 @@ class ConsoleSpec extends FunSuite {
                 .sequenceAndDefault[IO](Chain("foo", "bar", "baz"), "")
         rs <- {
           implicit val console: Console[IO] =
-            new TestConsole(out1, out2, out3, in1)
+            TestConsole.make(out1, out2, out3, in1)
           program[IO]
         }
         rs1 <- out1.get
