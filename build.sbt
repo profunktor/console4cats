@@ -11,14 +11,17 @@ crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.7")
 
 sonatypeProfileName := "com.github.gvolpe"
 
-promptTheme := PromptTheme(List(
-  text("[SBT] ", fg(136)),
-  text(_ => "console4cats", fg(64)).padRight(" λ ")
- ))
+promptTheme := PromptTheme(
+  List(
+    text("[SBT] ", fg(136)),
+    text(_ => "console4cats", fg(64)).padRight(" λ ")
+  )
+)
 
 lazy val commonScalacOptions = Seq(
   "-deprecation",
-  "-encoding", "UTF-8",
+  "-encoding",
+  "UTF-8",
   "-feature",
   "-language:existentials",
   "-language:higherKinds",
@@ -34,9 +37,11 @@ lazy val commonScalacOptions = Seq(
   "-Xfuture",
   "-Xlog-reflective-calls",
   "-Ywarn-inaccessible",
-  "-Ypatmat-exhaust-depth", "20",
+  "-Ypatmat-exhaust-depth",
+  "20",
   "-Ydelambdafy:method",
-  "-Xmax-classfile-name", "100"
+  "-Xmax-classfile-name",
+  "100"
 )
 
 val commonSettings = Seq(
@@ -60,9 +65,11 @@ val commonSettings = Seq(
   },
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ => false },
+  pomIncludeRepository := { _ =>
+    false
+  },
   pomExtra :=
-      <developers>
+    <developers>
         <developer>
           <id>gvolpe</id>
           <name>Gabriel Volpe</name>
@@ -78,15 +85,18 @@ lazy val noPublish = Seq(
   skip in publish := true
 )
 
-lazy val root = project.in(file("."))
+lazy val root = project
+  .in(file("."))
   .aggregate(console4cats, microsite)
   .settings(noPublish)
 
-lazy val console4cats = project.in(file("core"))
+lazy val console4cats = project
+  .in(file("core"))
   .settings(commonSettings: _*)
   .enablePlugins(AutomateHeaderPlugin)
 
-lazy val microsite = project.in(file("site"))
+lazy val microsite = project
+  .in(file("site"))
   .enablePlugins(MicrositesPlugin)
   .settings(commonSettings: _*)
   .settings(noPublish)

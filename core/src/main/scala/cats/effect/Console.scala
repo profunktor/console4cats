@@ -16,7 +16,7 @@
 
 package cats.effect
 
-import cats.{Show, ~>}
+import cats.{ ~>, Show }
 import cats.instances.string._
 import cats.syntax.show._
 
@@ -123,6 +123,6 @@ class SyncConsole[F[_]](implicit F: Sync[F]) extends Console[F] {
     F.delay(scala.io.StdIn.readLine)
   // Needed to avoid "ambiguous reference to overloaded definition" error
   override final def putStrLn(str: String): F[Unit] = super.putStrLn(str)
-  override final def putStr(str: String): F[Unit] = super.putStr(str)
+  override final def putStr(str: String): F[Unit]   = super.putStr(str)
   override final def putError(str: String): F[Unit] = super.putError(str)
 }

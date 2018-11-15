@@ -22,7 +22,7 @@ import cats.instances.boolean._
 import cats.instances.double._
 import cats.instances.int._
 import cats.syntax.all._
-import cats.{Applicative, FlatMap, Show}
+import cats.{ Applicative, FlatMap, Show }
 import org.scalatest.FunSuite
 
 class ConsoleSpec extends FunSuite {

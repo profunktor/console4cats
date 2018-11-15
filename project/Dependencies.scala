@@ -8,8 +8,8 @@ object Dependencies {
   }
 
   object Libraries {
-    lazy val catsEffect   = "org.typelevel" %% "cats-effect" % Versions.catsEffect
-    lazy val scalaTest    = "org.scalatest" %% "scalatest"   % Versions.scalaTest  % Test
+    lazy val catsEffect = "org.typelevel" %% "cats-effect" % Versions.catsEffect
+    lazy val scalaTest  = "org.scalatest" %% "scalatest"   % Versions.scalaTest % Test
   }
 
 }
