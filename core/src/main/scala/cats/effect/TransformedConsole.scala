@@ -16,11 +16,9 @@
 
 package cats.effect
 
-import cats.{Show, ~>}
+import cats.{ ~>, Show }
 
-private[effect] class TransformedConsole[F[_], G[_]](underlying: Console[F],
-                                                     f: F ~> G)
-    extends Console[G] {
+private[effect] class TransformedConsole[F[_], G[_]](underlying: Console[F], f: F ~> G) extends Console[G] {
 
   override def putStrLn[A: Show](a: A): G[Unit] = f(underlying.putStrLn(a))
 
