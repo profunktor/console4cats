@@ -50,11 +50,10 @@ class ConsoleSpec extends FunSuite {
         out3 <- Ref[IO].of(Chain.empty[String])
         in1 <- TestConsole.inputs
                 .sequenceAndDefault[IO](Chain("foo", "bar", "baz"), "")
-        rs <- {
-          implicit val console: Console[IO] =
-            TestConsole.make(out1, out2, out3, in1)
-          program[IO]
-        }
+
+        implicit0(console: Console[IO]) = TestConsole.make(out1, out2, out3, in1)
+
+        rs <- program[IO]
         rs1 <- out1.get
         rs2 <- out2.get
         rs3 <- out3.get
@@ -68,6 +67,10 @@ class ConsoleSpec extends FunSuite {
     test.unsafeRunSync()
   }
 
+  object implicit0 {
+    def unapply[A](a: A): Some[A] = Some(a)
+  }
+
   test("mapK") {
     type E[A] = EitherT[IO, String, A]
 
@@ -78,12 +81,10 @@ class ConsoleSpec extends FunSuite {
         out3 <- Ref[IO].of(Chain.empty[String])
         in1 <- TestConsole.inputs
                 .sequenceAndDefault[IO](Chain("foo"), "undefined")
-        rs <- {
-          implicit val console: Console[E] =
-            new TestConsole[IO](out1, out2, out3, in1)
-              .mapK(EitherT.liftK[IO, String])
-          program[E].value
-        }
+
+        implicit0(console: Console[E]) = TestConsole.make(out1, out2, out3, in1).mapK(EitherT.liftK[IO, String])
+
+        rs <- program[E].value
         rs1 <- out1.get
         rs2 <- out2.get
         rs3 <- out3.get
