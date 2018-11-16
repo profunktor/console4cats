@@ -40,3 +40,36 @@ def myProgram[F[_]: Monad](implicit C: Console[F]): F[Unit] =
          else C.putError("Name is empty!")
   } yield ()
 ```
+
+### TestConsole
+
+For testing, we provide a helper that makes it easier to test console output: `cats.effect.test.TestConsole`.
+
+```tut:book:silent
+import cats.data.Chain
+import cats.effect.IO
+import cats.effect.concurrent.Ref
+import cats.effect.test.TestConsole
+
+val test = for {
+  out1 <- Ref[IO].of(Chain.empty[String])
+  out2 <- Ref[IO].of(Chain.empty[String])
+  out3 <- Ref[IO].of(Chain.empty[String])
+  in1 <- TestConsole.inputs
+          .sequenceAndDefault[IO](Chain("foo", "bar"), "baz")
+  
+  console = TestConsole.make(out1, out2, out3, in1)
+  
+  input <- console.readLn
+  _     <- console.putStrLn(input)
+  _     <- console.putStr("boom")
+  _     <- console.putError("err")
+  rs1 <- out1.get
+  rs2 <- out2.get
+  rs3 <- out3.get
+} yield {
+  assert(rs1 == Chain.one("foo"))
+  assert(rs2 == Chain.one("boom"))
+  assert(rs3 == Chain.one("err"))
+}
+  ```

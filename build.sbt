@@ -51,7 +51,8 @@ val commonSettings = Seq(
   homepage := Some(url("https://github.com/gvolpe/console4cats")),
   libraryDependencies ++= Seq(
     Libraries.catsEffect,
-    Libraries.scalaTest
+    Libraries.scalaTest,
+    CompilerPlugins.bm4
   ),
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
   scalacOptions ++= commonScalacOptions,
