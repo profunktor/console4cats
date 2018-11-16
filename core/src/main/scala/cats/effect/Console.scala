@@ -58,7 +58,7 @@ import cats.{ ~>, Show }
 trait Console[F[_]] {
 
   /**
-    * Prints a message of type A to the console followed by a new line using the implicit `Show[A]` instance.
+    * Prints a message of type A followed by a new line to the console using the implicit `Show[A]` instance.
     */
   def putStrLn[A: Show](a: A): F[Unit]
 
@@ -78,7 +78,7 @@ trait Console[F[_]] {
   def putStr(str: String): F[Unit] = putStr[String](str)
 
   /**
-    * Prints a message of type A to the error output using the implicit `Show[A]` instance.
+    * Prints a message of type A followed by a new line to the error output using the implicit `Show[A]` instance.
     */
   def putError[A: Show](a: A): F[Unit]
 

@@ -32,7 +32,7 @@ private class SyncConsole[F[_]](private val out: PrintStream,
     extends Console[F] {
 
   /**
-    * Prints a message of type A to the output stream followed by a new line using the implicit `Show[A]` instance.
+    * Prints a message of type A followed by a new line to the output stream using the implicit `Show[A]` instance.
     * */
   def putStrLn[A: Show](a: A): F[Unit] =
     F.delay(out.println(a.show))
@@ -44,7 +44,7 @@ private class SyncConsole[F[_]](private val out: PrintStream,
     F.delay(out.print(a.show))
 
   /**
-    * Prints a message of type A to the error output stream followed by a new line using the implicit `Show[A]` instance.
+    * Prints a message of type A followed by a new line to the error output stream using the implicit `Show[A]` instance.
     * */
   def putError[A: Show](a: A): F[Unit] =
     F.delay(err.println(a.show))
