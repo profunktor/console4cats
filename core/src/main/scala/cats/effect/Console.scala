@@ -16,6 +16,12 @@
 
 package cats.effect
 
+import cats.effect.transformed.{
+  TransformedConsole,
+  TransformedConsoleError,
+  TransformedConsoleIn,
+  TransformedConsoleOut
+}
 import cats.instances.string._
 import cats.{ ~>, Show }
 
@@ -55,7 +61,27 @@ import cats.{ ~>, Show }
   *     } yield ()
   * }}}
   */
-trait Console[F[_]] {
+trait Console[F[_]] extends ConsoleIn[F] with ConsoleOut[F] with ConsoleError[F] { self =>
+
+  /**
+    * Transforms this console using a FunctionK.
+    * */
+  override def mapK[G[_]](fk: F ~> G): Console[G] = new TransformedConsole[F, G] {
+    override protected val underlying: Console[F] = self
+    override protected val f: ~>[F, G]            = fk
+  }
+}
+
+object Console {
+  def apply[F[_]](implicit F: Console[F]): Console[F] = F
+
+  /**
+    * Default instance for `Console[IO]` that prints to standard input/output streams.
+    */
+  val io: Console[IO] = SyncConsole.stdio[IO]
+}
+
+trait ConsoleOut[F[_]] { self =>
 
   /**
     * Prints a message of type A followed by a new line to the console using the implicit `Show[A]` instance.
@@ -78,6 +104,21 @@ trait Console[F[_]] {
   def putStr(str: String): F[Unit] = putStr[String](str)
 
   /**
+    * Transforms this console using a FunctionK.
+    * */
+  def mapK[G[_]](fk: F ~> G): ConsoleOut[G] = new TransformedConsoleOut[F, G] {
+    override protected val underlying: ConsoleOut[F] = self
+    override protected val f: F ~> G                 = fk
+  }
+}
+
+object ConsoleOut {
+  def apply[F[_]](implicit F: ConsoleOut[F]): ConsoleOut[F] = F
+}
+
+trait ConsoleError[F[_]] { self =>
+
+  /**
     * Prints a message of type A followed by a new line to the error output using the implicit `Show[A]` instance.
     */
   def putError[A: Show](a: A): F[Unit]
@@ -86,6 +127,21 @@ trait Console[F[_]] {
     * Prints a message to the error output.
     */
   def putError(str: String): F[Unit] = putError[String](str)
+
+  /**
+    * Transforms this console using a FunctionK.
+    * */
+  def mapK[G[_]](fk: F ~> G): ConsoleError[G] = new TransformedConsoleError[F, G] {
+    override protected val underlying: ConsoleError[F] = self
+    override protected val f: F ~> G                   = fk
+  }
+}
+
+object ConsoleError {
+  def apply[F[_]](implicit F: ConsoleError[F]): ConsoleError[F] = F
+}
+
+trait ConsoleIn[F[_]] { self =>
 
   /**
     * Reads a line from the console input.
@@ -97,15 +153,12 @@ trait Console[F[_]] {
   /**
     * Transforms this console using a FunctionK.
     * */
-  def mapK[G[_]](f: F ~> G): Console[G] = new TransformedConsole(this, f)
+  def mapK[G[_]](fk: F ~> G): ConsoleIn[G] = new TransformedConsoleIn[F, G] {
+    override protected val underlying: ConsoleIn[F] = self
+    override protected val f: F ~> G                = fk
+  }
 }
 
-object Console {
-
-  def apply[F[_]](implicit F: Console[F]): Console[F] = F
-
-  /**
-    * Default instance for `Console[IO]` that prints to standard input/output streams.
-    */
-  val io: Console[IO] = SyncConsole.stdio[IO]
+object ConsoleIn {
+  def apply[F[_]](implicit F: ConsoleIn[F]): ConsoleIn[F] = F
 }
