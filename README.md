@@ -18,7 +18,7 @@ val program: IO[Unit] =
 
 Add the dependency to your project:
 
-```
+```scala
 libraryDependencies += "com.github.gvolpe" %% "console4cats" % Version
 ```
 
