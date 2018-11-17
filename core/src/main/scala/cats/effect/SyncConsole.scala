@@ -26,9 +26,11 @@ import cats.syntax.show._
   *
   * Construct one e.g. by calling `SyncConsole.stdIn[F]`.
   */
-private class SyncConsole[F[_]](private val out: PrintStream,
-                                private val err: PrintStream,
-                                private val in: BufferedReader)(implicit F: Sync[F])
+private class SyncConsole[F[_]](
+    private val out: PrintStream,
+    private val err: PrintStream,
+    private val in: BufferedReader
+)(implicit F: Sync[F])
     extends Console[F] {
 
   /**
