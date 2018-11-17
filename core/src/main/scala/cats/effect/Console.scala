@@ -16,14 +16,8 @@
 
 package cats.effect
 
-import cats.effect.transformed.{
-  TransformedConsole,
-  TransformedConsoleError,
-  TransformedConsoleIn,
-  TransformedConsoleOut
-}
-import cats.instances.string._
-import cats.{ ~>, Show }
+import cats.effect.transformed.TransformedConsole
+import cats.~>
 
 /**
   * Effect type agnostic `Console` with common methods to write and read from the standard console.
@@ -79,86 +73,4 @@ object Console {
     * Default instance for `Console[IO]` that prints to standard input/output streams.
     */
   val io: Console[IO] = SyncConsole.stdio[IO]
-}
-
-trait ConsoleOut[F[_]] { self =>
-
-  /**
-    * Prints a message of type A followed by a new line to the console using the implicit `Show[A]` instance.
-    */
-  def putStrLn[A: Show](a: A): F[Unit]
-
-  /**
-    * Prints a message to the console followed by a new line.
-    */
-  def putStrLn(str: String): F[Unit] = putStrLn[String](str)
-
-  /**
-    * Prints a message of type A to the console using the implicit `Show[A]` instance.
-    */
-  def putStr[A: Show](a: A): F[Unit]
-
-  /**
-    * Prints a message to the console.
-    */
-  def putStr(str: String): F[Unit] = putStr[String](str)
-
-  /**
-    * Transforms this console using a FunctionK.
-    * */
-  def mapK[G[_]](fk: F ~> G): ConsoleOut[G] = new TransformedConsoleOut[F, G] {
-    override protected val underlying: ConsoleOut[F] = self
-    override protected val f: F ~> G                 = fk
-  }
-}
-
-object ConsoleOut {
-  def apply[F[_]](implicit F: ConsoleOut[F]): ConsoleOut[F] = F
-}
-
-trait ConsoleError[F[_]] { self =>
-
-  /**
-    * Prints a message of type A followed by a new line to the error output using the implicit `Show[A]` instance.
-    */
-  def putError[A: Show](a: A): F[Unit]
-
-  /**
-    * Prints a message to the error output.
-    */
-  def putError(str: String): F[Unit] = putError[String](str)
-
-  /**
-    * Transforms this console using a FunctionK.
-    * */
-  def mapK[G[_]](fk: F ~> G): ConsoleError[G] = new TransformedConsoleError[F, G] {
-    override protected val underlying: ConsoleError[F] = self
-    override protected val f: F ~> G                   = fk
-  }
-}
-
-object ConsoleError {
-  def apply[F[_]](implicit F: ConsoleError[F]): ConsoleError[F] = F
-}
-
-trait ConsoleIn[F[_]] { self =>
-
-  /**
-    * Reads a line from the console input.
-    *
-    * @return a value representing the user's input.
-    */
-  def readLn: F[String]
-
-  /**
-    * Transforms this console using a FunctionK.
-    * */
-  def mapK[G[_]](fk: F ~> G): ConsoleIn[G] = new TransformedConsoleIn[F, G] {
-    override protected val underlying: ConsoleIn[F] = self
-    override protected val f: F ~> G                = fk
-  }
-}
-
-object ConsoleIn {
-  def apply[F[_]](implicit F: ConsoleIn[F]): ConsoleIn[F] = F
 }
