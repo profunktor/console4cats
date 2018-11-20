@@ -16,8 +16,8 @@
 
 package cats.effect
 
-import cats.instances.string._
-import cats.{ ~>, Show }
+import cats.effect.transformed.TransformedConsole
+import cats.~>
 
 /**
   * Effect type agnostic `Console` with common methods to write and read from the standard console.
@@ -55,53 +55,18 @@ import cats.{ ~>, Show }
   *     } yield ()
   * }}}
   */
-trait Console[F[_]] {
-
-  /**
-    * Prints a message of type A followed by a new line to the console using the implicit `Show[A]` instance.
-    */
-  def putStrLn[A: Show](a: A): F[Unit]
-
-  /**
-    * Prints a message to the console followed by a new line.
-    */
-  def putStrLn(str: String): F[Unit] = putStrLn[String](str)
-
-  /**
-    * Prints a message of type A to the console using the implicit `Show[A]` instance.
-    */
-  def putStr[A: Show](a: A): F[Unit]
-
-  /**
-    * Prints a message to the console.
-    */
-  def putStr(str: String): F[Unit] = putStr[String](str)
-
-  /**
-    * Prints a message of type A followed by a new line to the error output using the implicit `Show[A]` instance.
-    */
-  def putError[A: Show](a: A): F[Unit]
-
-  /**
-    * Prints a message to the error output.
-    */
-  def putError(str: String): F[Unit] = putError[String](str)
-
-  /**
-    * Reads a line from the console input.
-    *
-    * @return a value representing the user's input.
-    */
-  def readLn: F[String]
+trait Console[F[_]] extends ConsoleIn[F] with ConsoleOut[F] with ConsoleError[F] { self =>
 
   /**
     * Transforms this console using a FunctionK.
     * */
-  def mapK[G[_]](f: F ~> G): Console[G] = new TransformedConsole(this, f)
+  override def mapK[G[_]](fk: F ~> G): Console[G] = new TransformedConsole[F, G] {
+    override protected val underlying: Console[F] = self
+    override protected val f: ~>[F, G]            = fk
+  }
 }
 
 object Console {
-
   def apply[F[_]](implicit F: Console[F]): Console[F] = F
 
   /**

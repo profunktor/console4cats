@@ -14,17 +14,15 @@
  * limitations under the License.
  */
 
-package cats.effect
+package cats.effect.transformed
 
+import cats.effect.ConsoleOut
 import cats.{ ~>, Show }
 
-private[effect] class TransformedConsole[F[_], G[_]](underlying: Console[F], f: F ~> G) extends Console[G] {
+private[effect] trait TransformedConsoleOut[F[_], G[_]] extends ConsoleOut[G] {
+  protected def underlying: ConsoleOut[F]
+  protected def f: F ~> G
 
   override def putStrLn[A: Show](a: A): G[Unit] = f(underlying.putStrLn(a))
-
-  override def putStr[A: Show](a: A): G[Unit] = f(underlying.putStr(a))
-
-  override def putError[A: Show](a: A): G[Unit] = f(underlying.putError(a))
-
-  override val readLn: G[String] = f(underlying.readLn)
+  override def putStr[A: Show](a: A): G[Unit]   = f(underlying.putStr(a))
 }
