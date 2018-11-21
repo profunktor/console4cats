@@ -31,9 +31,39 @@
          <span class="k">else</span> <span class="n">C</span><span class="o">.</span><span class="n">putError</span><span class="o">(</span><span class="s">"Name is empty!"</span><span class="o">)</span>
   <span class="o">}</span> <span class="k">yield</span> <span class="o">()</span>
 </code></pre></div></div>
-</section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/console4cats/highlight/highlight.pack.js"></script><script>hljs.configure({
-languages:['scala','java','bash']
-});
+
+<h3 id="testconsole">TestConsole</h3>
+
+<p>For testing, we provide a helper that makes it easier to test console output: <code class="highlighter-rouge">cats.effect.test.TestConsole</code>.</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">cats.data.Chain</span>
+<span class="k">import</span> <span class="nn">cats.effect.IO</span>
+<span class="k">import</span> <span class="nn">cats.effect.concurrent.Ref</span>
+<span class="k">import</span> <span class="nn">cats.effect.test.TestConsole</span>
+
+<span class="k">val</span> <span class="n">test</span> <span class="k">=</span> <span class="k">for</span> <span class="o">{</span>
+  <span class="n">out1</span> <span class="k">&lt;-</span> <span class="nc">Ref</span><span class="o">[</span><span class="kt">IO</span><span class="o">].</span><span class="n">of</span><span class="o">(</span><span class="nc">Chain</span><span class="o">.</span><span class="n">empty</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span>
+  <span class="n">out2</span> <span class="k">&lt;-</span> <span class="nc">Ref</span><span class="o">[</span><span class="kt">IO</span><span class="o">].</span><span class="n">of</span><span class="o">(</span><span class="nc">Chain</span><span class="o">.</span><span class="n">empty</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span>
+  <span class="n">out3</span> <span class="k">&lt;-</span> <span class="nc">Ref</span><span class="o">[</span><span class="kt">IO</span><span class="o">].</span><span class="n">of</span><span class="o">(</span><span class="nc">Chain</span><span class="o">.</span><span class="n">empty</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span>
+  <span class="n">in1</span> <span class="k">&lt;-</span> <span class="nc">TestConsole</span><span class="o">.</span><span class="n">inputs</span>
+          <span class="o">.</span><span class="n">sequenceAndDefault</span><span class="o">[</span><span class="kt">IO</span><span class="o">](</span><span class="nc">Chain</span><span class="o">(</span><span class="s">"foo"</span><span class="o">,</span> <span class="s">"bar"</span><span class="o">),</span> <span class="s">"baz"</span><span class="o">)</span>
+  
+  <span class="n">console</span> <span class="k">=</span> <span class="nc">TestConsole</span><span class="o">.</span><span class="n">make</span><span class="o">(</span><span class="n">out1</span><span class="o">,</span> <span class="n">out2</span><span class="o">,</span> <span class="n">out3</span><span class="o">,</span> <span class="n">in1</span><span class="o">)</span>
+  
+  <span class="n">input</span> <span class="k">&lt;-</span> <span class="n">console</span><span class="o">.</span><span class="n">readLn</span>
+  <span class="k">_</span>     <span class="k">&lt;-</span> <span class="n">console</span><span class="o">.</span><span class="n">putStrLn</span><span class="o">(</span><span class="n">input</span><span class="o">)</span>
+  <span class="k">_</span>     <span class="k">&lt;-</span> <span class="n">console</span><span class="o">.</span><span class="n">putStr</span><span class="o">(</span><span class="s">"boom"</span><span class="o">)</span>
+  <span class="k">_</span>     <span class="k">&lt;-</span> <span class="n">console</span><span class="o">.</span><span class="n">putError</span><span class="o">(</span><span class="s">"err"</span><span class="o">)</span>
+  <span class="n">rs1</span> <span class="k">&lt;-</span> <span class="n">out1</span><span class="o">.</span><span class="n">get</span>
+  <span class="n">rs2</span> <span class="k">&lt;-</span> <span class="n">out2</span><span class="o">.</span><span class="n">get</span>
+  <span class="n">rs3</span> <span class="k">&lt;-</span> <span class="n">out3</span><span class="o">.</span><span class="n">get</span>
+<span class="o">}</span> <span class="k">yield</span> <span class="o">{</span>
+  <span class="n">assert</span><span class="o">(</span><span class="n">rs1</span> <span class="o">==</span> <span class="nc">Chain</span><span class="o">.</span><span class="n">one</span><span class="o">(</span><span class="s">"foo"</span><span class="o">))</span>
+  <span class="n">assert</span><span class="o">(</span><span class="n">rs2</span> <span class="o">==</span> <span class="nc">Chain</span><span class="o">.</span><span class="n">one</span><span class="o">(</span><span class="s">"boom"</span><span class="o">))</span>
+  <span class="n">assert</span><span class="o">(</span><span class="n">rs3</span> <span class="o">==</span> <span class="nc">Chain</span><span class="o">.</span><span class="n">one</span><span class="o">(</span><span class="s">"err"</span><span class="o">))</span>
+<span class="o">}</span>
+</code></pre></div></div>
+</section></div></div></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="/console4cats/highlight/highlight.pack.js"></script><script>hljs.configure({languages:['scala','java','bash']});
 hljs.initHighlighting();
-             </script><script>((window.gitter = {}).chat = {}).options = {
+              </script><script>((window.gitter = {}).chat = {}).options = {
 room: 'typelevel/cats-effect'};</script><script src="https://sidecar.gitter.im/dist/sidecar.v1.js"></script><script src="/console4cats/js/main.js"></script></body></html>
