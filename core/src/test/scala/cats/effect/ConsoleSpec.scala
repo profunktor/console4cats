@@ -95,7 +95,7 @@ class ConsoleSpec extends FunSuite {
         assert(rs3.mkString_("", ",", "") == "foo,1.5")
       }
 
-    test.value.unsafeRunSync()
+    test.unsafeRunSync()
   }
 
 }
