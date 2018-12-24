@@ -45,9 +45,10 @@ lazy val commonScalacOptions = Seq(
 )
 
 val commonSettings = Seq(
-  organizationName := "Typelevel",
+  organizationName := "Console for Cats",
   startYear := Some(2018),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
+  headerLicense := Some(HeaderLicense.ALv2("2018-2019", "Console for Cats")),
   homepage := Some(url("https://github.com/gvolpe/console4cats")),
   libraryDependencies ++= Seq(
     Libraries.catsEffect,
