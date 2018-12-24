@@ -60,10 +60,11 @@ trait Console[F[_]] extends ConsoleIn[F] with ConsoleOut[F] with ConsoleError[F]
   /**
     * Transforms this console using a FunctionK.
     * */
-  override def mapK[G[_]](fk: F ~> G): Console[G] = new TransformedConsole[F, G] {
-    override protected val underlying: Console[F] = self
-    override protected val f: ~>[F, G]            = fk
-  }
+  override def mapK[G[_]](fk: F ~> G): Console[G] =
+    new TransformedConsole[F, G] {
+      override protected val underlying: Console[F] = self
+      override protected val f: ~>[F, G]            = fk
+    }
 }
 
 object Console {

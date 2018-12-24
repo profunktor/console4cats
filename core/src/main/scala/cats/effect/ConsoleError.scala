@@ -35,10 +35,11 @@ trait ConsoleError[F[_]] { self =>
   /**
     * Transforms this console using a FunctionK.
     * */
-  def mapK[G[_]](fk: F ~> G): ConsoleError[G] = new TransformedConsoleError[F, G] {
-    override protected val underlying: ConsoleError[F] = self
-    override protected val f: F ~> G                   = fk
-  }
+  def mapK[G[_]](fk: F ~> G): ConsoleError[G] =
+    new TransformedConsoleError[F, G] {
+      override protected val underlying: ConsoleError[F] = self
+      override protected val f: F ~> G                   = fk
+    }
 }
 object ConsoleError {
   def apply[F[_]](implicit F: ConsoleError[F]): ConsoleError[F] = F

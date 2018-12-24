@@ -30,10 +30,11 @@ trait ConsoleIn[F[_]] { self =>
   /**
     * Transforms this console using a FunctionK.
     * */
-  def mapK[G[_]](fk: F ~> G): ConsoleIn[G] = new TransformedConsoleIn[F, G] {
-    override protected val underlying: ConsoleIn[F] = self
-    override protected val f: F ~> G                = fk
-  }
+  def mapK[G[_]](fk: F ~> G): ConsoleIn[G] =
+    new TransformedConsoleIn[F, G] {
+      override protected val underlying: ConsoleIn[F] = self
+      override protected val f: F ~> G                = fk
+    }
 }
 object ConsoleIn {
   def apply[F[_]](implicit F: ConsoleIn[F]): ConsoleIn[F] = F

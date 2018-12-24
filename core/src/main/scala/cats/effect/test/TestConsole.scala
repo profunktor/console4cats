@@ -48,10 +48,12 @@ object TestConsole {
     *
     * Meant for testing purposes, not for production usage.
     * */
-  def make[F[_]: Applicative](outLines: Ref[F, Chain[String]],
-                              outWords: Ref[F, Chain[String]],
-                              outErrors: Ref[F, Chain[String]],
-                              readLn: F[String]): Console[F] =
+  def make[F[_]: Applicative](
+      outLines: Ref[F, Chain[String]],
+      outWords: Ref[F, Chain[String]],
+      outErrors: Ref[F, Chain[String]],
+      readLn: F[String]
+  ): Console[F] =
     new TestConsole[F](outLines, outWords, outErrors, readLn)
 
   object inputs {
@@ -70,7 +72,10 @@ object TestConsole {
       * } yield (lines == Chain.of("foo", "bar", "default", "default"))
       * }}}
       * */
-    def sequenceAndDefault[F[_]: Sync](inputs: Chain[String], default: String): F[F[String]] =
+    def sequenceAndDefault[F[_]: Sync](
+        inputs: Chain[String],
+        default: String
+    ): F[F[String]] =
       Ref[F].of(inputs).map {
         _.modify {
           _.uncons match {

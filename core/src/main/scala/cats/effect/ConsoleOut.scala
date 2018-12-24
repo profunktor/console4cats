@@ -45,10 +45,11 @@ trait ConsoleOut[F[_]] { self =>
   /**
     * Transforms this console using a FunctionK.
     * */
-  def mapK[G[_]](fk: F ~> G): ConsoleOut[G] = new TransformedConsoleOut[F, G] {
-    override protected val underlying: ConsoleOut[F] = self
-    override protected val f: F ~> G                 = fk
-  }
+  def mapK[G[_]](fk: F ~> G): ConsoleOut[G] =
+    new TransformedConsoleOut[F, G] {
+      override protected val underlying: ConsoleOut[F] = self
+      override protected val f: F ~> G                 = fk
+    }
 }
 object ConsoleOut {
   def apply[F[_]](implicit F: ConsoleOut[F]): ConsoleOut[F] = F
