@@ -74,4 +74,8 @@ object Console {
     * Default instance for `Console[IO]` that prints to standard input/output streams.
     */
   val io: Console[IO] = SyncConsole.stdio[IO]
+
+  object implicits {
+    implicit val instance: Console[IO] = io
+  }
 }
