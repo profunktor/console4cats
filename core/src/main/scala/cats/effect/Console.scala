@@ -76,6 +76,6 @@ object Console {
   val io: Console[IO] = SyncConsole.stdio[IO]
 
   object implicits {
-    implicit val instance: Console[IO] = io
+    implicit val ioConsole: Console[IO] = io
   }
 }
