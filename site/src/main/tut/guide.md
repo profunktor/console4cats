@@ -28,7 +28,7 @@ val program: IO[Unit] =
 
 ```tut:book:reset:silent
 import cats.Monad
-import cats.effect.Console
+import cats.effect.{ Console, IO }
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 
@@ -39,6 +39,11 @@ def myProgram[F[_]: Monad](implicit C: Console[F]): F[Unit] =
     _ <- if (n.nonEmpty) C.putStrLn(s"Hello $n!")
          else C.putError("Name is empty!")
   } yield ()
+
+// Providing a default instance for Console[IO]
+import cats.effect.Console.implicits._
+
+def entryPoint: IO[Unit] = myProgram[IO]
 ```
 
 ### TestConsole
@@ -57,9 +62,9 @@ val test = for {
   out3 <- Ref[IO].of(Chain.empty[String])
   in1 <- TestConsole.inputs
           .sequenceAndDefault[IO](Chain("foo", "bar"), "baz")
-  
+
   console = TestConsole.make(out1, out2, out3, in1)
-  
+
   input <- console.readLn
   _     <- console.putStrLn(input)
   _     <- console.putStr("boom")
