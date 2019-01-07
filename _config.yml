@@ -6,6 +6,6 @@ docs: true
 collections:
   tut:
     output: true
-version: '0.4'
-org: Typelevel
+version: 0.6.0
+org: Console for Cats
 markdown: kramdown
