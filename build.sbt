@@ -7,41 +7,15 @@ name := """console4cats"""
 
 organization in ThisBuild := "com.github.gvolpe"
 
-crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.7")
+crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8")
 
 sonatypeProfileName := "com.github.gvolpe"
 
 promptTheme := PromptTheme(
   List(
-    text("[SBT] ", fg(136)),
-    text(_ => "console4cats", fg(64)).padRight(" λ ")
+    text("[sbt] ", fg(105)),
+    text(_ => "console4cats", fg(15)).padRight(" λ ")
   )
-)
-
-lazy val commonScalacOptions = Seq(
-  "-deprecation",
-  "-encoding",
-  "UTF-8",
-  "-feature",
-  "-language:existentials",
-  "-language:higherKinds",
-  "-language:implicitConversions",
-  "-language:experimental.macros",
-  "-unchecked",
-  "-Ypartial-unification",
-  "-Xfatal-warnings",
-  "-Xlint",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-value-discard",
-  "-Xfuture",
-  "-Xlog-reflective-calls",
-  "-Ywarn-inaccessible",
-  "-Ypatmat-exhaust-depth",
-  "20",
-  "-Ydelambdafy:method",
-  "-Xmax-classfile-name",
-  "100"
 )
 
 val commonSettings = Seq(
@@ -56,7 +30,6 @@ val commonSettings = Seq(
     CompilerPlugins.bm4
   ),
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
-  scalacOptions ++= commonScalacOptions,
   scalafmtOnCompile := true,
   publishTo := {
     val sonatype = "https://oss.sonatype.org/"
