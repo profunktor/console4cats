@@ -22,6 +22,10 @@ Add the dependency to your project:
 libraryDependencies += "com.github.gvolpe" %% "console4cats" % Version
 ```
 
+### Code of Conduct
+
+See the [Code of Conduct](CODE_OF_CONDUCT.md)
+
 ### Usage
 
 See the [usage guide](https://gvolpe.github.io/console4cats/guide.html).
