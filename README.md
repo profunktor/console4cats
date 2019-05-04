@@ -24,7 +24,7 @@ libraryDependencies += "com.github.gvolpe" %% "console4cats" % Version
 
 ### Code of Conduct
 
-See the [Code of Conduct](CODE_OF_CONDUCT.md)
+See the [Code of Conduct](https://gvolpe.github.io/console4cats/CODE_OF_CONDUCT)
 
 ### Usage
 
