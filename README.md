@@ -2,7 +2,7 @@ console4cats
 ============
 
 [![CircleCI](https://circleci.com/gh/profunktor/console4cats.svg?style=svg)](https://circleci.com/gh/profunktor/console4cats)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.gvolpe/console4cats_2.12.svg)](http://search.maven.org/#search%7Cga%7C1%7Cconsole4cats) <a href="https://typelevel.org/cats/"><img src="https://typelevel.org/cats/img/cats-badge.svg" height="40px" align="right" alt="Cats friendly" /></a>
+[![Maven Central](https://img.shields.io/maven-central/v/dev.profunktor/console4cats_2.12.svg)](http://search.maven.org/#search%7Cga%7C1%7Cconsole4cats) <a href="https://typelevel.org/cats/"><img src="https://typelevel.org/cats/img/cats-badge.svg" height="40px" align="right" alt="Cats friendly" /></a>
 
 Effect-type agnostic Console I/O for `Cats Effect`
 
