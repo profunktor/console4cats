@@ -1,11 +1,11 @@
 name: Console4Cats
-baseurl: /console4cats
+baseurl: ''
 description: Console I/O for Cats Effect
 highlighter: rouge
 docs: true
 collections:
   tut:
     output: true
-version: 0.6.0
-org: Console for Cats
+version: 0.7.0
+org: ProfunKtor
 markdown: kramdown
