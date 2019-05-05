@@ -19,8 +19,10 @@ val program: IO[Unit] =
 Add the dependency to your project:
 
 ```scala
-libraryDependencies += "com.github.gvolpe" %% "console4cats" % Version
+libraryDependencies += "dev.profunktor" %% "console4cats" % Version
 ```
+
+Note: previous versions `<= 0.6.0` were published using the `com.github.gvolpe` group id.
 
 ### Code of Conduct
 
