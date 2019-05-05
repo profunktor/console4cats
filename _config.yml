@@ -1,5 +1,5 @@
 name: Console4Cats
-baseurl: /
+baseurl: ''
 description: Console I/O for Cats Effect
 highlighter: rouge
 docs: true
