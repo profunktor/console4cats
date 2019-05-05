@@ -5,11 +5,11 @@ import microsites.ExtraMdFileConfig
 
 name := """console4cats"""
 
-organization in ThisBuild := "com.github.gvolpe"
+organization in ThisBuild := "dev.profunktor"
 
 crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8")
 
-sonatypeProfileName := "com.github.gvolpe"
+sonatypeProfileName := "dev.profunktor"
 
 promptTheme := PromptTheme(
   List(
@@ -19,11 +19,11 @@ promptTheme := PromptTheme(
 )
 
 val commonSettings = Seq(
-  organizationName := "Console for Cats",
+  organizationName := "ProfunKtor",
   startYear := Some(2018),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
   headerLicense := Some(HeaderLicense.ALv2("2018-2019", "Console for Cats")),
-  homepage := Some(url("https://github.com/gvolpe/console4cats")),
+  homepage := Some(url("https://console4cats.profunktor.dev/")),
   libraryDependencies ++= Seq(
     Libraries.catsEffect,
     Libraries.scalaTest,
@@ -48,7 +48,7 @@ val commonSettings = Seq(
         <developer>
           <id>gvolpe</id>
           <name>Gabriel Volpe</name>
-          <url>http://github.com/gvolpe</url>
+          <url>https://github.com/gvolpe</url>
         </developer>
       </developers>
 )
@@ -79,9 +79,9 @@ lazy val microsite = project
     micrositeName := "Console4Cats",
     micrositeDescription := "Console I/O for Cats Effect",
     micrositeAuthor := "Gabriel Volpe",
-    micrositeGithubOwner := "gvolpe",
+    micrositeGithubOwner := "profunktor",
     micrositeGithubRepo := "console4cats",
-    micrositeBaseUrl := "/console4cats",
+    micrositeBaseUrl := "",
     micrositeExtraMdFiles := Map(
       file("README.md") -> ExtraMdFileConfig(
         "index.md",
