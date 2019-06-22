@@ -99,7 +99,6 @@ lazy val microsite = project
     micrositePushSiteWith := GitHub4s,
     micrositeGithubToken := sys.env.get("GITHUB_TOKEN"),
     fork in tut := true,
-    scalaVersion in tut := "2.12.8"
     scalacOptions in Tut --= Seq(
       "-Xfatal-warnings",
       "-Ywarn-unused-import",
