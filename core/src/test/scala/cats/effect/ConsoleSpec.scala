@@ -89,7 +89,7 @@ class ConsoleSpec extends FunSuite {
         rs2 <- out2.get
         rs3 <- out3.get
       } yield {
-        assert(rs.right.get == List("foo", "undefined", "undefined"))
+        assert(rs.getOrElse(fail("Either.Left")) == List("foo", "undefined", "undefined"))
         assert(rs1.mkString_("", ",", "") == "a,true")
         assert(rs2.mkString_("", ",", "") == "123,b")
         assert(rs3.mkString_("", ",", "") == "foo,1.5")
