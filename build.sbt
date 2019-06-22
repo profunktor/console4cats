@@ -7,7 +7,7 @@ name := """console4cats"""
 
 organization in ThisBuild := "dev.profunktor"
 
-crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8")
+crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8", "2.13.0")
 
 sonatypeProfileName := "dev.profunktor"
 
@@ -98,6 +98,7 @@ lazy val microsite = project
     micrositeGitterChannelUrl := "typelevel/cats-effect",
     micrositePushSiteWith := GitHub4s,
     micrositeGithubToken := sys.env.get("GITHUB_TOKEN"),
+    scalaVersion := "2.12.8",
     fork in tut := true,
     scalacOptions in Tut --= Seq(
       "-Xfatal-warnings",
