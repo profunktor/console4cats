@@ -7,7 +7,7 @@ name := """console4cats"""
 
 organization in ThisBuild := "dev.profunktor"
 
-crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8")
+crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8", "2.13.0")
 
 sonatypeProfileName := "dev.profunktor"
 
