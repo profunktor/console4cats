@@ -98,6 +98,7 @@ lazy val microsite = project
     micrositeGitterChannelUrl := "typelevel/cats-effect",
     micrositePushSiteWith := GitHub4s,
     micrositeGithubToken := sys.env.get("GITHUB_TOKEN"),
+    scalaVersion := "2.12.8",
     fork in tut := true,
     scalacOptions in Tut --= Seq(
       "-Xfatal-warnings",
