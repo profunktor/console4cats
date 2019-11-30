@@ -25,9 +25,9 @@ import cats.instances.string._
 import cats.syntax.all._
 import cats.FlatMap
 import cats.effect.test.TestConsole
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class ConsoleSpec extends FunSuite {
+class ConsoleSpec extends AnyFunSuite {
 
   def program[F[_]: FlatMap](implicit C: Console[F]): F[List[String]] =
     for {
