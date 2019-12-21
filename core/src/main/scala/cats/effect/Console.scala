@@ -16,8 +16,9 @@
 
 package cats.effect
 
+import cats._
+import cats.data._
 import cats.effect.transformed.TransformedConsole
-import cats.~>
 
 /**
   * Effect type agnostic `Console` with common methods to write and read from the standard console.
@@ -78,4 +79,29 @@ object Console {
   object implicits {
     implicit val ioConsole: Console[IO] = io
   }
+
+  // Monad Transformer instances
+
+  implicit def eitherTConsole[F[_]: Applicative: Console, E]: Console[EitherT[F, E, *]] =
+    Console[F].mapK[EitherT[F, E, *]](EitherT.liftK)
+
+  implicit def iorTConsole[F[_]: Applicative: Console, L: Semigroup]: Console[IorT[F, L, *]] =
+    Console[F].mapK[IorT[F, L, *]](IorT.liftK)
+
+  implicit def kleisliConsole[F[_]: Applicative: Console, E]: Console[Kleisli[F, E, *]] =
+    Console[F].mapK[Kleisli[F, E, *]](Kleisli.liftK)
+
+  implicit def optionTConsole[F[_]: Applicative: Console, E]: Console[OptionT[F, *]] =
+    Console[F].mapK[OptionT[F, *]](OptionT.liftK)
+
+  implicit def catsReaderWriteStateTSync[F[_]: Applicative: Console, E, L: Monoid, S]
+    : Console[ReaderWriterStateT[F, E, L, S, *]] =
+    Console[F].mapK[ReaderWriterStateT[F, E, L, S, *]](ReaderWriterStateT.liftK)
+
+  implicit def stateTConsole[F[_]: Applicative: Console, S]: Console[StateT[F, S, *]] =
+    Console[F].mapK[StateT[F, S, *]](StateT.liftK)
+
+  implicit def writerTConsole[F[_]: Applicative: Console, L: Monoid]: Console[WriterT[F, L, *]] =
+    Console[F].mapK[WriterT[F, L, *]](WriterT.liftK)
+
 }
