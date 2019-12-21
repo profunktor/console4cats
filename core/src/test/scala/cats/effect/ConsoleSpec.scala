@@ -16,15 +16,11 @@
 
 package cats.effect
 
-import cats.data.{ Chain, EitherT }
+import cats._
+import cats.data._
 import cats.effect.concurrent.Ref
-import cats.instances.boolean._
-import cats.instances.double._
-import cats.instances.int._
-import cats.instances.string._
-import cats.syntax.all._
-import cats.FlatMap
 import cats.effect.test.TestConsole
+import cats.implicits._
 import org.scalatest.funsuite.AnyFunSuite
 
 class ConsoleSpec extends AnyFunSuite {
@@ -96,6 +92,18 @@ class ConsoleSpec extends AnyFunSuite {
       }
 
     test.unsafeRunSync()
+  }
+
+  // Monad Transformer instances
+
+  def instances[F[_]: Applicative: Console] = {
+    Console[OptionT[F, *]]
+    Console[EitherT[F, String, *]]
+    Console[IorT[F, String, *]]
+    Console[Kleisli[F, String, *]]
+    Console[ReaderWriterStateT[F, String, Int, Boolean, *]]
+    Console[StateT[F, Int, *]]
+    Console[WriterT[F, String, *]]
   }
 
 }

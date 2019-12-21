@@ -27,7 +27,8 @@ val commonSettings = Seq(
   libraryDependencies ++= Seq(
     Libraries.catsEffect,
     Libraries.scalaTest,
-    CompilerPlugins.bm4
+    CompilerPlugins.bm4,
+    CompilerPlugins.kindProjector
   ),
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
   scalafmtOnCompile := true,
