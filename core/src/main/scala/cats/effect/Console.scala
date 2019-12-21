@@ -94,7 +94,7 @@ object Console {
   implicit def optionTConsole[F[_]: Applicative: Console, E]: Console[OptionT[F, *]] =
     Console[F].mapK[OptionT[F, *]](OptionT.liftK)
 
-  implicit def catsReaderWriteStateTSync[F[_]: Applicative: Console, E, L: Monoid, S]
+  implicit def readerWriteStateTConsole[F[_]: Applicative: Console, E, L: Monoid, S]
     : Console[ReaderWriterStateT[F, E, L, S, *]] =
     Console[F].mapK[ReaderWriterStateT[F, E, L, S, *]](ReaderWriterStateT.liftK)
 
