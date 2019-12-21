@@ -101,6 +101,7 @@ class ConsoleSpec extends AnyFunSuite {
     Console[EitherT[F, String, *]]
     Console[IorT[F, String, *]]
     Console[Kleisli[F, String, *]]
+    Console[ReaderWriterStateT[F, String, Int, Boolean, *]]
     Console[StateT[F, Int, *]]
     Console[WriterT[F, String, *]]
   }
