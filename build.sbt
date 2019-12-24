@@ -96,6 +96,7 @@ lazy val microsite = project
         Map("title" -> "Code of Conduct")
       )
     ),
+    micrositeExtraMdFilesOutput := (resourceManaged in Compile).value / "jekyll",
     micrositeGitterChannel := true,
     micrositeGitterChannelUrl := "typelevel/cats-effect",
     micrositePushSiteWith := GitHub4s,
