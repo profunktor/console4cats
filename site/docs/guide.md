@@ -11,7 +11,7 @@ There's a default instance defined for any `F[_]` with a `Sync` instance named `
 
 #### DSL style with IO
 
-```tut:book:silent
+```scala mdoc:silent
 import cats.effect.IO
 import cats.effect.Console.io._
 
@@ -26,7 +26,7 @@ val program: IO[Unit] =
 
 #### Tagless final encoding:
 
-```tut:book:reset:silent
+```scala mdoc:reset:silent
 import cats.Monad
 import cats.data.StateT
 import cats.effect.{ Console, IO }
@@ -45,7 +45,7 @@ import cats.effect.Console.implicits._
 
 def entryPoint: IO[Unit] = myProgram[IO]
 
-// You can also use Monad Transformers 
+// You can also use Monad Transformers
 def mt: IO[Unit] =
   myProgram[StateT[IO, String, *]].run("foo").void
 ```
@@ -54,7 +54,7 @@ def mt: IO[Unit] =
 
 For testing, we provide a helper that makes it easier to test console output: `cats.effect.test.TestConsole`.
 
-```tut:book:silent
+```scala mdoc:silent
 import cats.data.Chain
 import cats.effect.IO
 import cats.effect.concurrent.Ref
@@ -81,4 +81,4 @@ val test = for {
   assert(rs2 == Chain.one("boom"))
   assert(rs3 == Chain.one("err"))
 }
-  ```
+```

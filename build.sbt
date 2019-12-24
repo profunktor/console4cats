@@ -74,6 +74,7 @@ lazy val console4cats = project
 lazy val microsite = project
   .in(file("site"))
   .enablePlugins(MicrositesPlugin)
+  .enablePlugins(MdocPlugin)
   .settings(commonSettings: _*)
   .settings(noPublish)
   .settings(
@@ -98,18 +99,9 @@ lazy val microsite = project
     micrositeGitterChannel := true,
     micrositeGitterChannelUrl := "typelevel/cats-effect",
     micrositePushSiteWith := GitHub4s,
-    micrositeGithubToken := sys.env.get("GITHUB_TOKEN"),
-    scalaVersion := "2.12.8",
-    fork in tut := true,
-    scalacOptions in Tut --= Seq(
-      "-Xfatal-warnings",
-      "-Ywarn-unused-import",
-      "-Ywarn-numeric-widen",
-      "-Ywarn-dead-code",
-      "-Xlint:-missing-interpolator,_",
-    )
+    micrositeGithubToken := sys.env.get("GITHUB_TOKEN")
   )
   .dependsOn(console4cats)
 
 // CI build
-addCommandAlias("buildConsole4Cats", ";clean;+test;tut")
+addCommandAlias("buildConsole4Cats", ";clean;+test;mdoc")
