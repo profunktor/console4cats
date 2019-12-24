@@ -28,22 +28,26 @@ val program: IO[Unit] =
 
 ```tut:book:reset:silent
 import cats.Monad
+import cats.data.StateT
 import cats.effect.{ Console, IO }
-import cats.syntax.flatMap._
-import cats.syntax.functor._
+import cats.implicits._
 
-def myProgram[F[_]: Monad](implicit C: Console[F]): F[Unit] =
+def myProgram[F[_]: Console: Monad]: F[Unit] =
   for {
-    _ <- C.putStrLn("Please enter your name: ")
-    n <- C.readLn
-    _ <- if (n.nonEmpty) C.putStrLn(s"Hello $n!")
-         else C.putError("Name is empty!")
+    _ <- Console[F].putStrLn("Please enter your name: ")
+    n <- Console[F].readLn
+    _ <- if (n.nonEmpty) Console[F].putStrLn(s"Hello $n!")
+         else Console[F].putError("Name is empty!")
   } yield ()
 
 // Providing a default instance for Console[IO]
 import cats.effect.Console.implicits._
 
 def entryPoint: IO[Unit] = myProgram[IO]
+
+// You can also use Monad Transformers 
+def mt: IO[Unit] =
+  myProgram[StateT[IO, String, *]].run("foo").void
 ```
 
 ### TestConsole
