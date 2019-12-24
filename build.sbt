@@ -74,7 +74,6 @@ lazy val console4cats = project
 lazy val microsite = project
   .in(file("site"))
   .enablePlugins(MicrositesPlugin)
-  .enablePlugins(MdocPlugin)
   .settings(commonSettings: _*)
   .settings(noPublish)
   .settings(
