@@ -79,7 +79,7 @@ lazy val microsite = project
   .settings(
     micrositeName := "Console4Cats",
     micrositeDescription := "Console I/O for Cats Effect",
-    micrositeAuthor := "Gabriel Volpe",
+    micrositeAuthor := "ProfunKtor",
     micrositeGithubOwner := "profunktor",
     micrositeGithubRepo := "console4cats",
     micrositeBaseUrl := "",
