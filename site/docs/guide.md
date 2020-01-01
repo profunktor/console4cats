@@ -1,8 +1,8 @@
 ---
-layout: docs
+layout: page
 title:  "Guide"
-number: 1
-position: 1
+section: guide
+position: 2
 ---
 
 # Usage Guide
