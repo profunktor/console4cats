@@ -22,7 +22,7 @@ val commonSettings = Seq(
   organizationName := "ProfunKtor",
   startYear := Some(2018),
   licenses += ("Apache-2.0", new URL("https://www.apache.org/licenses/LICENSE-2.0.txt")),
-  headerLicense := Some(HeaderLicense.ALv2("2018-2019", "Console for Cats")),
+  headerLicense := Some(HeaderLicense.ALv2("2018-2020", "ProfunKtor")),
   homepage := Some(url("https://console4cats.profunktor.dev/")),
   libraryDependencies ++= Seq(
     Libraries.catsEffect,
