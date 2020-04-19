@@ -48,13 +48,13 @@ object TestConsole {
     *
     * Meant for testing purposes, not for production usage.
     * */
-  def make[F[_]: Applicative](
+  def make[F[_]: Sync](
       outLines: Ref[F, Chain[String]],
       outWords: Ref[F, Chain[String]],
       outErrors: Ref[F, Chain[String]],
       readLn: F[String]
-  ): Console[F] =
-    new TestConsole[F](outLines, outWords, outErrors, readLn)
+  ): F[Console[F]] =
+    F.delay(new TestConsole[F](outLines, outWords, outErrors, readLn))
 
   object inputs {
 

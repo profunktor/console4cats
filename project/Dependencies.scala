@@ -2,21 +2,23 @@ import sbt._
 
 object Dependencies {
 
-  object Versions {
-    val catsEffect    = "2.0.0"
-    val scalaTest     = "3.1.1"
-    val bm4           = "0.3.0"
-    val kindProjector = "0.10.3"
+  object V {
+    val catsEffect     = "2.1.3"
+    val munit          = "0.7.2"
+    val bm4            = "0.3.1"
+    val contextApplied = "0.1.4"
+    val kindProjector  = "0.11.0"
   }
 
-  object Libraries {
-    val catsEffect = "org.typelevel" %% "cats-effect" % Versions.catsEffect
-    val scalaTest  = "org.scalatest" %% "scalatest"   % Versions.scalaTest % Test
+  object Deps {
+    val catsEffect = "org.typelevel" %% "cats-effect" % V.catsEffect
+    val munit      = "org.scalameta" %% "munit"       % V.munit % Test
   }
 
   object CompilerPlugins {
-    val bm4           = compilerPlugin("com.olegpy"    %% "better-monadic-for" % Versions.bm4)
-    val kindProjector = compilerPlugin("org.typelevel" %% "kind-projector"     % Versions.kindProjector)
+    val bm4            = compilerPlugin("com.olegpy"     %% "better-monadic-for" % V.bm4)
+    val contextApplied = compilerPlugin("org.augustjune" %% "context-applied"    % V.contextApplied)
+    val kindProjector  = compilerPlugin("org.typelevel"  %% "kind-projector"     % V.kindProjector cross CrossVersion.full)
   }
 
 }
