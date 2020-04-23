@@ -4,7 +4,7 @@ object Dependencies {
 
   object V {
     val catsEffect     = "2.1.3"
-    val munit          = "0.7.2"
+    val munit          = "0.7.3"
     val bm4            = "0.3.1"
     val contextApplied = "0.1.4"
     val kindProjector  = "0.11.0"
