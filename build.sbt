@@ -7,7 +7,7 @@ name := """console4cats"""
 
 organization in ThisBuild := "dev.profunktor"
 
-crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.8", "2.13.0")
+crossScalaVersions in ThisBuild := Seq("2.12.10", "2.13.1")
 
 sonatypeProfileName := "dev.profunktor"
 
@@ -25,11 +25,13 @@ val commonSettings = Seq(
   headerLicense := Some(HeaderLicense.ALv2("2018-2020", "ProfunKtor")),
   homepage := Some(url("https://console4cats.profunktor.dev/")),
   libraryDependencies ++= Seq(
-    Libraries.catsEffect,
-    Libraries.scalaTest,
-    CompilerPlugins.bm4,
-    CompilerPlugins.kindProjector
-  ),
+        Deps.catsEffect,
+        Deps.munit,
+        CompilerPlugins.bm4,
+        CompilerPlugins.contextApplied,
+        CompilerPlugins.kindProjector
+      ),
+  testFrameworks += new TestFramework("munit.Framework"),
   resolvers += "Apache public" at "https://repository.apache.org/content/groups/public/",
   scalafmtOnCompile := true,
   publishTo := {
@@ -41,11 +43,9 @@ val commonSettings = Seq(
   },
   publishMavenStyle := true,
   publishArtifact in Test := false,
-  pomIncludeRepository := { _ =>
-    false
-  },
+  pomIncludeRepository := { _ => false },
   pomExtra :=
-    <developers>
+      <developers>
         <developer>
           <id>gvolpe</id>
           <name>Gabriel Volpe</name>
@@ -84,17 +84,17 @@ lazy val microsite = project
     micrositeGithubRepo := "console4cats",
     micrositeBaseUrl := "",
     micrositeExtraMdFiles := Map(
-      file("README.md") -> ExtraMdFileConfig(
-        "index.md",
-        "home",
-        Map("title" -> "Home", "position" -> "0")
-      ),
-      file("CODE_OF_CONDUCT.md") -> ExtraMdFileConfig(
-        "CODE_OF_CONDUCT.md",
-        "page",
-        Map("title" -> "Code of Conduct")
-      )
-    ),
+          file("README.md") -> ExtraMdFileConfig(
+                "index.md",
+                "home",
+                Map("title" -> "Home", "position" -> "0")
+              ),
+          file("CODE_OF_CONDUCT.md") -> ExtraMdFileConfig(
+                "CODE_OF_CONDUCT.md",
+                "page",
+                Map("title" -> "Code of Conduct")
+              )
+        ),
     micrositeExtraMdFilesOutput := (resourceManaged in Compile).value / "jekyll",
     micrositeGitterChannel := true,
     micrositeGitterChannelUrl := "typelevel/cats-effect",

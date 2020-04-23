@@ -21,77 +21,70 @@ import cats.data._
 import cats.effect.concurrent.Ref
 import cats.effect.test.TestConsole
 import cats.implicits._
-import org.scalatest.funsuite.AnyFunSuite
+import munit.FunSuite
 
-class ConsoleSpec extends AnyFunSuite {
+class ConsoleSpec extends FunSuite {
 
-  def program[F[_]: FlatMap](implicit C: Console[F]): F[List[String]] =
+  def program[F[_]: Console: FlatMap]: F[List[String]] =
     for {
-      _ <- C.putStrLn("a")
-      _ <- C.putStrLn(true)
-      _ <- C.putStr(123)
-      _ <- C.putStr("b")
-      rd1 <- C.readLn
-      _ <- C.putError(rd1)
-      _ <- C.putError(1.5)
-      rd2 <- C.readLn
-      rd3 <- C.readLn
+      _ <- F.putStrLn("a")
+      _ <- F.putStrLn(true)
+      _ <- F.putStr(123)
+      _ <- F.putStr("b")
+      rd1 <- F.readLn
+      _ <- F.putError(rd1)
+      _ <- F.putError(1.5)
+      rd2 <- F.readLn
+      rd3 <- F.readLn
     } yield List(rd1, rd2, rd3)
 
+  override def munitValueTransforms =
+    super.munitValueTransforms :+ new ValueTransform("IO", {
+      case ioa: IO[_] => ioa.unsafeToFuture
+    })
+
   test("Console") {
-    val test =
-      for {
-        out1 <- Ref[IO].of(Chain.empty[String])
-        out2 <- Ref[IO].of(Chain.empty[String])
-        out3 <- Ref[IO].of(Chain.empty[String])
-        in1 <- TestConsole.inputs
-                .sequenceAndDefault[IO](Chain("foo", "bar", "baz"), "")
-
-        implicit0(console: Console[IO]) = TestConsole.make(out1, out2, out3, in1)
-
-        rs <- program[IO]
-        rs1 <- out1.get
-        rs2 <- out2.get
-        rs3 <- out3.get
-      } yield {
-        assert(rs == List("foo", "bar", "baz"))
-        assert(rs1.mkString_("", ",", "") == "a,true")
-        assert(rs2.mkString_("", ",", "") == "123,b")
-        assert(rs3.mkString_("", ",", "") == "foo,1.5")
-      }
-
-    test.unsafeRunSync()
-  }
-
-  object implicit0 {
-    def unapply[A](a: A): Some[A] = Some(a)
+    for {
+      out1 <- Ref[IO].of(Chain.empty[String])
+      out2 <- Ref[IO].of(Chain.empty[String])
+      out3 <- Ref[IO].of(Chain.empty[String])
+      in1 <- TestConsole.inputs
+              .sequenceAndDefault[IO](Chain("foo", "bar", "baz"), "")
+      implicit0(console: Console[IO]) <- TestConsole.make(out1, out2, out3, in1)
+      rs <- program[IO]
+      rs1 <- out1.get
+      rs2 <- out2.get
+      rs3 <- out3.get
+    } yield {
+      assert(rs == List("foo", "bar", "baz"))
+      assert(rs1.mkString_("", ",", "") == "a,true")
+      assert(rs2.mkString_("", ",", "") == "123,b")
+      assert(rs3.mkString_("", ",", "") == "foo,1.5")
+    }
   }
 
   test("mapK") {
     type E[A] = EitherT[IO, String, A]
 
-    val test =
-      for {
-        out1 <- Ref[IO].of(Chain.empty[String])
-        out2 <- Ref[IO].of(Chain.empty[String])
-        out3 <- Ref[IO].of(Chain.empty[String])
-        in1 <- TestConsole.inputs
-                .sequenceAndDefault[IO](Chain("foo"), "undefined")
-
-        implicit0(console: Console[E]) = TestConsole.make(out1, out2, out3, in1).mapK(EitherT.liftK[IO, String])
-
-        rs <- program[E].value
-        rs1 <- out1.get
-        rs2 <- out2.get
-        rs3 <- out3.get
-      } yield {
-        assert(rs.getOrElse(fail("Either.Left")) == List("foo", "undefined", "undefined"))
-        assert(rs1.mkString_("", ",", "") == "a,true")
-        assert(rs2.mkString_("", ",", "") == "123,b")
-        assert(rs3.mkString_("", ",", "") == "foo,1.5")
-      }
-
-    test.unsafeRunSync()
+    for {
+      out1 <- Ref[IO].of(Chain.empty[String])
+      out2 <- Ref[IO].of(Chain.empty[String])
+      out3 <- Ref[IO].of(Chain.empty[String])
+      in1 <- TestConsole.inputs
+              .sequenceAndDefault[IO](Chain("foo"), "undefined")
+      implicit0(console: Console[E]) <- TestConsole
+                                         .make(out1, out2, out3, in1)
+                                         .map(_.mapK(EitherT.liftK[IO, String]))
+      rs <- program[E].value
+      rs1 <- out1.get
+      rs2 <- out2.get
+      rs3 <- out3.get
+    } yield {
+      assert(rs.getOrElse(fail("Either.Left")) == List("foo", "undefined", "undefined"))
+      assert(rs1.mkString_("", ",", "") == "a,true")
+      assert(rs2.mkString_("", ",", "") == "123,b")
+      assert(rs3.mkString_("", ",", "") == "foo,1.5")
+    }
   }
 
   // Monad Transformer instances

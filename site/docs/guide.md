@@ -67,7 +67,7 @@ val test = for {
   in1 <- TestConsole.inputs
           .sequenceAndDefault[IO](Chain("foo", "bar"), "baz")
 
-  console = TestConsole.make(out1, out2, out3, in1)
+  console <- TestConsole.make(out1, out2, out3, in1)
 
   input <- console.readLn
   _     <- console.putStrLn(input)
