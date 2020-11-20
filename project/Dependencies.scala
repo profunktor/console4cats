@@ -7,7 +7,7 @@ object Dependencies {
     val munit          = "0.7.17"
     val bm4            = "0.3.1"
     val contextApplied = "0.1.4"
-    val kindProjector  = "0.11.0"
+    val kindProjector  = "0.11.1"
   }
 
   object Deps {
