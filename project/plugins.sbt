@@ -2,7 +2,7 @@ resolvers += Classpaths.sbtPluginReleases
 resolvers += "Typesafe Repository" at "https://repo.typesafe.com/typesafe/releases/"
 
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat"   % "0.1.16")
-addSbtPlugin("org.xerial.sbt"            % "sbt-sonatype"   % "3.9.5")
+addSbtPlugin("org.xerial.sbt"            % "sbt-sonatype"   % "3.9.6")
 addSbtPlugin("com.github.sbt"              % "sbt-pgp"        % "2.1.2")
 addSbtPlugin("de.heikoseeberger"         % "sbt-header"     % "5.6.0")
 addSbtPlugin("com.lucidchart"            % "sbt-scalafmt"   % "1.16")
