@@ -18,10 +18,10 @@ package cats.effect.test
 
 import cats._
 import cats.data.Chain
-import cats.effect.concurrent.Ref
 import cats.effect.{ Console, Sync }
 import cats.syntax.functor._
 import cats.syntax.show._
+import cats.effect.Ref
 
 private class TestConsole[F[_]: Applicative](
     outLines: Ref[F, Chain[String]],

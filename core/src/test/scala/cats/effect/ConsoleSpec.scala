@@ -18,10 +18,10 @@ package cats.effect
 
 import cats._
 import cats.data._
-import cats.effect.concurrent.Ref
 import cats.effect.test.TestConsole
 import cats.implicits._
 import munit.FunSuite
+import cats.effect.Ref
 
 class ConsoleSpec extends FunSuite {
 
